@@ -1,0 +1,225 @@
+//first implemeting Business Logics
+
+package com.bean;
+
+import com.Author;
+import com.beanImplement.DCC;
+import com.date.Date;
+
+public class BusinessLogicImpl {
+    DCC dcc;
+
+    public void BookCredentials(int bookId, String bookName, float bookPrice, Author a, Date d) {
+        dcc = new DCC(bookId, bookName, bookPrice, a, d);
+    }
+
+    public void BookDetails(String bookName) {
+        //Checking for details using bookName
+        if (dcc.getBookName() == bookName) {
+            System.out.println(dcc.toString());
+        } else {
+            System.out.println("Incorrect credentials / book does not exist.");
+        }
+    }
+
+    public float bookOffers(String bookName) {
+        if (this.dcc.getBookName() == bookName) {
+            if ((this.dcc.getD().getYy() >= 2010) && this.dcc.getD().getYy() <= 2021) {
+
+                float newBookPrice = this.dcc.getBookPrice();
+                newBookPrice = newBookPrice - (0.25f * newBookPrice);
+                return newBookPrice;
+            } else {
+                System.out.println("Book Not Exists or Book Published Year not Exists between 2010 to 2021");
+            }
+        }
+        return 0.0f;
+    }
+}
+
+
+//2nd creating Data Carrier Class 
+
+
+package com.beanImplement;
+
+import com.Author;
+import com.date.Date;
+
+public class DCC {
+  private int bookId;
+  private String bookName;
+  private float bookPrice;
+  private Author a;
+  private Date d;
+
+    public DCC(int bookId, String bookName, float bookPrice, Author a, Date d) {
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.bookPrice = bookPrice;
+        this.a = a;
+        this.d = d;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public float getBookPrice() {
+        return bookPrice;
+    }
+
+    public void setBookPrice(float bookPrice) {
+        this.bookPrice = bookPrice;
+    }
+
+    public Author getA() {
+        return a;
+    }
+
+    public void setA(Author a) {
+        this.a = a;
+    }
+
+    public Date getD() {
+        return d;
+    }
+
+    public void setD(Date d) {
+        this.d = d;
+    }
+
+    @Override
+    public String toString() {
+        return "DCC {" +
+                "bookId=" + bookId +
+                ", bookName='" + bookName + '\'' +
+                ", bookPrice=" + bookPrice +
+                ", a=" + a +
+                ", d=" + d +
+                '}';
+    }
+}
+
+
+//Creating Author class
+
+package com;
+
+public class Author {
+
+
+    private int authorId;
+    private String authorName;
+
+    public int getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    @Override
+    public String toString() {
+        return "Author [authorId=" + authorId + ", authorName=" + authorName + "]";
+    }
+
+    public Author(int authorId, String authorName)
+    {
+        this.authorId=authorId;
+        this.authorName=authorName;
+    }
+}
+
+
+//Creating Date class
+
+package com.date;
+
+public class Date {
+
+    private int dd;
+    private int mm;
+    private int yy;
+
+    public Date(int dd, int mm, int yy) {
+        this.dd = dd;
+        this.mm = mm;
+        this.yy = yy;
+    }
+
+    public int getDd() {
+        return dd;
+    }
+
+    public void setDd(int dd) {
+        this.dd = dd;
+    }
+
+    public int getMm() {
+        return mm;
+    }
+
+    public void setMm(int mm) {
+        this.mm = mm;
+    }
+
+    public int getYy() {
+        return yy;
+    }
+
+    public void setYy(int yy) {
+        this.yy = yy;
+    }
+
+    public String toString(){
+        return "Date - " + dd + "/" + mm + "/" + yy;
+    }
+}
+
+//Creating the Main class
+
+package com.company;
+
+import com.Author;
+import com.bean.BusinessLogicImpl;
+import com.date.Date;
+
+public class Main {
+
+    public static void main(String[] args) {
+        BusinessLogicImpl b = new BusinessLogicImpl();
+        b.BookCredentials(3456, "Secrets", 250.0f, new Author(1008, "Ronda Burn"), new Date(12, 12, 2016));
+        b.BookDetails("Secrets");
+        System.out.println(b.bookOffers("Secrets"));
+
+
+        BusinessLogicImpl b1 = new BusinessLogicImpl();
+        b1.BookCredentials(3320, "The soldier life", 1000.0f, new Author(911, "Shawn Kennedy"), new Date(1, 10, 2001));
+        b1.BookDetails("The soldier life");
+        System.out.println(b1.bookOffers("The soldier life"));
+    }
+}
+
+
